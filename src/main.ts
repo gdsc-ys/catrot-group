@@ -38,6 +38,14 @@ app.use(showMembersRouter)
 app.use(joinGroupRouter)
 app.use(leaveGroupRouter)
 
+const sendData = {
+    name: 'test',
+    age: 99,
+    url: 'tistory.com',
+};
+app.get('/', (req: Request, res: Response) => {
+    res.send(sendData);
+});
 
 declare global {
     interface CustomError extends Error {
