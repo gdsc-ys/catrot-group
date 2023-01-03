@@ -6,7 +6,7 @@ const router = Router()
 router.post('/api/group/update/:id', async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
 
-    const { name, description, lead, capacity } = req.body;
+    const { description } = req.body;
 
     if(!id) {
         const error = new Error('group id is required') as CustomError
@@ -19,7 +19,7 @@ router.post('/api/group/update/:id', async (req: Request, res: Response, next: N
     try {
         updatedGroup = await Group.findOneAndUpdate(
             { _id: id }, 
-            { $set: { name, description, lead, capacity } }, 
+            { $set: { description } }, 
             { new: true }
         )
     } catch(err) {

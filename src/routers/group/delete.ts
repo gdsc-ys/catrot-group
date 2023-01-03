@@ -13,6 +13,8 @@ router.delete('/api/group/delete/:id', async (req: Request, res: Response, next:
     }
 
     try {
+        // Member를 돌며 groups_in을 모두 제거한 뒤 Group 삭제
+        
         await Group.findOneAndRemove({ _id: id })
     } catch(err) {
         next(new Error('group cannot be deleted'))

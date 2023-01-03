@@ -14,14 +14,21 @@ router.delete('/api/user/:userId/delete/:groupId', async (req: Request, res: Res
     }
 
     try {
-        await User.findOneAndRemove({ _id: groupId })
+        // User는 가입한 group에서 나감
+        await User.findOneAndUpdate({ _id: userId }, { $pull: { groups_in: groupId } })
+    } catch(err) {
+        next(new Error('user cannot leave the group'))
+    }
+
+    try {
+        // Group의 멤버가 나감
+        await Group.findOneAndUpdate({ _id: groupId }, { $pull: { members: userId } })
     } catch(err) {
         next(new Error('user cannot be removed'))
     }
-
-    await Group.findOneAndUpdate({ _id: groupId }, { $pull: { members: userId } })
+    
 
     res.status(200).json({ success: true })
 })
 
-export { router as deleteUserRouter }
+export { router as leaveGroupRouter }

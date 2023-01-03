@@ -5,31 +5,33 @@ import Group from '../../models/group'
 const router = Router()
 
 router.post('/api/member/new/:groupId', async (req: Request, res: Response, next: NextFunction) => {
-    const { name, user_id, groups_own, groups_in } = req.body
+    const { userId } = req.body
     const { groupId } = req.params;
 
-    if (!user_id) {
-        const error = new Error('user_id is required!') as CustomError;
+    if (!userId || !groupId) {
+        const error = new Error('userId and groupId are required!') as CustomError;
         error.status = 400;
         return next(error)
     }
 
-    const newUser = new User({
-        name,
-        user_id,
-        groups_own,
-        groups_in
-    });
+    // find GROUP
+    const group = await Group.findById({_id: groupId})
 
-    await newUser.save()
+    // USER의 가입한 그룹에 추가
+    const updatedUser = await User.findOneAndUpdate(
+        { _id: userId },
+        { $push: { groups_in: group } },
+        { new: true }
+    )
 
+    // GROUP의 멤버에 추가
     const updatedGroup = await Group.findOneAndUpdate(
         { _id: groupId },
-        { $push: { members: newUser } },
+        { $push: { members: updatedUser } },
         { new: true }
     )
 
     res.status(201).send(updatedGroup)
 })
 
-export { router as newUserRouter }
+export { router as joinGroupRouter }

@@ -10,8 +10,9 @@ import {
     deleteGroupRouter, 
     updateGroupRouter, 
     showGroupRouter, 
-    newUserRouter,
-    deleteUserRouter
+    showMembersRouter,
+    joinGroupRouter,
+    leaveGroupRouter
 } from './routers'
 
 const app = express()
@@ -32,9 +33,10 @@ app.use(newGroupRouter)
 app.use(deleteGroupRouter)
 app.use(updateGroupRouter)
 app.use(showGroupRouter)
+app.use(showMembersRouter)
 
-app.use(newUserRouter)
-app.use(deleteUserRouter)
+app.use(joinGroupRouter)
+app.use(leaveGroupRouter)
 
 
 declare global {
