@@ -3,8 +3,13 @@ import Group from '../../models/group'
 
 const router = Router()
 
-router.post('/api/group/showMembers/', async (req: Request, res: Response, next:NextFunction) => {
-    const { id } = req.body;
+router.post('/group/showMembers/:id', async (req: Request, res: Response, next:NextFunction) => {
+    const { id } = req.params;
+    if(!id) {
+        const error = new Error('group id is required') as CustomError;
+        error.status = 400;
+        next(error)
+    }
 
     if(!id) {
         const allGroups = await Group.find()

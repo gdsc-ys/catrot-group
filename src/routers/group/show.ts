@@ -3,8 +3,8 @@ import Group from '../../models/group'
 
 const router = Router()
 
-router.post('/api/group/show/', async (req: Request, res: Response, next:NextFunction) => {
-    const { id } = req.body;
+router.post('/group/show/:id', async (req: Request, res: Response, next:NextFunction) => {
+    const { id } = req.params;
 
     if(!id) {
         const allGroups = await Group.find()

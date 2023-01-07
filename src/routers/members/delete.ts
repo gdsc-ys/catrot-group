@@ -4,7 +4,7 @@ import User from '../../models/user'
 
 const router = Router()
 
-router.delete('/api/user/:userId/delete/:groupId', async (req: Request, res: Response, next:NextFunction) => {
+router.delete('/member/:userId/delete/:groupId', async (req: Request, res: Response, next:NextFunction) => {
     const { groupId, userId } = req.params;
 
     if(!userId || !groupId) {

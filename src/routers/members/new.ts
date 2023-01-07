@@ -4,9 +4,8 @@ import Group from '../../models/group'
 
 const router = Router()
 
-router.post('/api/member/new/:groupId', async (req: Request, res: Response, next: NextFunction) => {
-    const { userId } = req.body
-    const { groupId } = req.params;
+router.post('/member/:userId/new/:groupId', async (req: Request, res: Response, next: NextFunction) => {
+    const { groupId, userId } = req.params;
 
     if (!userId || !groupId) {
         const error = new Error('userId and groupId are required!') as CustomError;

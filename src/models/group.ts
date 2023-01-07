@@ -22,7 +22,7 @@ const groupSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
         }
-    ]
+    ],
 });
 
 const Group = mongoose.model('Group', groupSchema)

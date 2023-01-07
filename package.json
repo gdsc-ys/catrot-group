@@ -6,7 +6,7 @@
   "scripts": {
     "proto:gen": "./proto-gen.sh",
     "pstart": "ts-node server",
-    "pclient": "ts-node client",
+    "pclient": "ts-node ./src/grpc_client",
     "compile": "tsc && node ./dist/src/main.js",
     "start": "nodemon -e ts --exec \"npm run compile\""
   },

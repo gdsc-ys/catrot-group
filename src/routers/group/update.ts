@@ -3,7 +3,7 @@ import Group from '../../models/group'
 
 const router = Router()
 
-router.post('/api/group/update/:id', async (req: Request, res: Response, next: NextFunction) => {
+router.post('/group/update/:id', async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
 
     const { description } = req.body;

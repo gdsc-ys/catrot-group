@@ -3,7 +3,7 @@ import Group from '../../models/group'
 
 const router = Router()
 
-router.delete('/api/group/delete/:id', async (req: Request, res: Response, next:NextFunction) => {
+router.delete('/group/delete/:id', async (req: Request, res: Response, next:NextFunction) => {
     const { id } = req.params;
 
     if(!id) {
@@ -11,10 +11,8 @@ router.delete('/api/group/delete/:id', async (req: Request, res: Response, next:
         error.status = 400;
         next(error)
     }
-
     try {
-        // Member를 돌며 groups_in을 모두 제거한 뒤 Group 삭제
-        
+        // TODO: group가입한 멤버들 돌면서 groups_in에서 삭제
         await Group.findOneAndRemove({ _id: id })
     } catch(err) {
         next(new Error('group cannot be deleted'))
