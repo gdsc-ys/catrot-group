@@ -4,8 +4,9 @@ import User from '../../models/user'
 
 const router = Router()
 
-router.delete('/member/:userId/delete/:groupId', async (req: Request, res: Response, next:NextFunction) => {
-    const { groupId, userId } = req.params;
+router.delete('/member/delete/:groupId', async (req: Request, res: Response, next:NextFunction) => {
+    const { groupId } = req.params;
+    const { userId } = req.body;
 
     if(!userId || !groupId) {
         const error = new Error('group id and user id are required') as CustomError;
