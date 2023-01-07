@@ -5,9 +5,9 @@ import User from '../../models/user'
 const router = Router()
 
 router.post('/api/group/new', async (req: Request, res: Response, next: NextFunction) => {
-    const { name, description, lead, capacity, user_id } = req.body
-    if (!name || !lead || !capacity) {
-        const error = new Error('name, lead and capacity are required!') as CustomError;
+    const { name, description, capacity, user_id } = req.body
+    if (!name || !capacity) {
+        const error = new Error('name and capacity are required!') as CustomError;
         error.status = 400;
         return next(error)
     }
@@ -15,23 +15,23 @@ router.post('/api/group/new', async (req: Request, res: Response, next: NextFunc
     let newGroupId
     let newUserId
 
-    // GROUP 생성
-    const newGroup = new Group({
-        name,
-        description,
-        lead,
-        capacity
-    });
-    await newGroup.save(function(err, group) {
-        newGroupId = group._id
-    })
-
     // USER 생성
     const newUser = new User({
         user_id
     })
     await newUser.save(function(err, user) {
         newUserId = user._id
+    })
+
+    // GROUP 생성
+    const newGroup = new Group({
+        name,
+        description,
+        newUserId,
+        capacity
+    });
+    await newGroup.save(function(err, group) {
+        newGroupId = group._id
     })
 
     // 생성한 USER를 member에 추가

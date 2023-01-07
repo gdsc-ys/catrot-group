@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package users;
+
+service Functions {
+  // Send a user id and get his information
+  rpc GetInfo (UserRequest) returns (UserReply) {}
+  // Send a user id and change in manner variable in the server
+  rpc ChangeManner (MannerRequest) returns (MannerReply) {}
+}
+
+message UserRequest {
+  int32 id = 1;
+}
+
+message UserReply {
+  string nickname = 1;
+  string phone = 2;
+  float manner = 3;
+}
+
+message MannerRequest {
+  int32 id = 1;
+  float amount = 2;
+  string direction = 3;
+}
+
+message MannerReply {
+  string message = 1;
+}
